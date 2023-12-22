@@ -25,8 +25,9 @@ int main()
         key = getch();
         move_snake(key);
         print_snake();
+        // gotoxy(0, ROWS);
         printf("%d", rand());
-        RandFOOD();
+        // RandFOOD();
         setbuf(stdin, NULL);
         continue;
     } while (key != Esc);

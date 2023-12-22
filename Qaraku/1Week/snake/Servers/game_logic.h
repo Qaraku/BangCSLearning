@@ -1,9 +1,23 @@
 #include "sys_logic.h"
 
+void init_face()
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            if (i == 0 || i == ROWS - 1 || j == 0 || j == COLS - 1)
+            {
+                face[i][j] = WALL;
+            }
+        }
+    }
+}
+
 void init_snake()
 {
     snake.len = 2;
-    snake.x = COLS / 2 * 2;
+    snake.x = COLS / 2;
     snake.y = ROWS / 2;
     face[snake.y][snake.x] = HEAD;
     body[0].x = snake.x + 1;
@@ -16,8 +30,23 @@ void init_snake()
     }
 }
 
+void update_snake()
+{
+    int x = snake.x;
+    int y = snake.y;
+    face[snake.y][snake.x] = HEAD;
+    body[0].x = x;
+    body[0].y = y;
+    snake.len += 1;
+    for (int i = 1; i < snake.len; i++)
+    {
+        body[i].x = body[i - 1].x;
+        body[i].y = body[i - 1].y;
+    }
+}
 void move_snake(int arg)
 {
+
     switch (arg)
     {
     case UP:
@@ -45,7 +74,9 @@ void move_snake(int arg)
         }
         break;
     }
+    update_snake();
 }
+
 void RandFOOD()
 {
     int i, j;
@@ -56,26 +87,6 @@ void RandFOOD()
         j = rand() % COLS;
     } while (face[i][j] != KONG); // 确保生成食物的位置为空，若不为空则重新生成
     face[i][j * 2] = FOOD;        // 将食物位置进行标记
-    color(12);                    // 颜色设置为红色
-    gotoxy(j * 2, i);             // 光标跳转到生成的随机位置处
-    printf("❤");                  // 打印食物
-}
-
-void update_snake()
-{
-    face[snake.y][snake.x] = HEAD;
-}
-
-void init_face()
-{
-    for (int i = 0; i < ROWS; i++)
-    {
-        for (int j = 0; j < COLS; j++)
-        {
-            if (i == 0 || i == ROWS - 1 || j == 0 || j == COLS - 1)
-            {
-                face[i][j] = WALL;
-            }
-        }
-    }
+    int p[2] = {i, j};
+    return p;
 }
