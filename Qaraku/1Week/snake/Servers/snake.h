@@ -3,14 +3,15 @@
 #include <stdlib.h>
 #include <time.h>
 #include <Windows.h>
+#include <conio.h>
 
 #define ROWS 40 // 屏幕行数
-#define COLS 80 // 屏幕列数
+#define COLS 40 // 屏幕列数
 // define some status
 #define KONG 0
 #define HEAD 1
-#define Food 2
-#define Wall 3
+#define FOOD 2
+#define WALL 3
 #define BODY 5
 // define some operations
 #define Esc 27
@@ -22,3 +23,14 @@
 #define RIGHT 77
 #define LEFT 75
 int face[ROWS][COLS];
+struct Snake
+{
+    int len;
+    int x;
+    int y;
+} snake;
+struct Snake_Body
+{
+    int x;
+    int y;
+} body[ROWS * COLS];
