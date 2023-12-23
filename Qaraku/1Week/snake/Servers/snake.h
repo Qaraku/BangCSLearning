@@ -4,6 +4,7 @@
 #include <time.h>
 #include <Windows.h>
 #include <conio.h>
+#include <stdbool.h>
 
 #define ROWS 40 // 屏幕行数
 #define COLS 40 // 屏幕列数
@@ -18,10 +19,10 @@
 #define Space 32
 #define Tab 9
 #define Enter 13
-#define UP 72
-#define DOWN 80
-#define RIGHT 77
-#define LEFT 75
+#define UP 'w'    // W
+#define DOWN 's'  // S
+#define RIGHT 'd' // D
+#define LEFT 'a'  // A
 int face[ROWS][COLS];
 struct Snake
 {
@@ -34,3 +35,10 @@ struct Snake_Body
     int x;
     int y;
 } body[ROWS * COLS];
+struct Food
+{
+    int x;
+    int y;
+    int type;
+    int exist;
+} food;

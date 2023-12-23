@@ -19,30 +19,25 @@ void init_snake()
     snake.len = 2;
     snake.x = COLS / 2;
     snake.y = ROWS / 2;
-    face[snake.y][snake.x] = HEAD;
+    // face[snake.y][snake.x] = HEAD;
     body[0].x = snake.x + 1;
     body[0].y = snake.y;
     body[1].x = snake.x + 2;
     body[1].y = snake.y;
-    for (int i = 0; i < snake.len; i++)
-    {
-        face[body[i].y][body[i].x] = BODY;
-    }
 }
 
 void update_snake()
 {
-    int x = snake.x;
-    int y = snake.y;
-    face[snake.y][snake.x] = HEAD;
-    body[0].x = x;
-    body[0].y = y;
-    snake.len += 1;
-    for (int i = 1; i < snake.len; i++)
+    // print操作上
+    gotoxy(body[snake.len - 1].x * 2 - 1, body[snake.len - 1].y);
+    printf("  ");
+    // face[snake.y][snake.x] = HEAD;
+    for (int i = snake.len - 1; i > 0; i--)
     {
         body[i].x = body[i - 1].x;
         body[i].y = body[i - 1].y;
     }
+    // snake.len += 1;
 }
 void move_snake(int arg)
 {
@@ -52,41 +47,72 @@ void move_snake(int arg)
     case UP:
         if (face[snake.y - 1][snake.x] != WALL)
         {
+            update_snake();
+            body[0].x = snake.x;
+            body[0].y = snake.y;
             snake.y--;
         }
         break;
     case DOWN:
         if (face[snake.y + 1][snake.x] != WALL)
         {
+            update_snake();
+            body[0].x = snake.x;
+            body[0].y = snake.y;
             snake.y++;
         }
         break;
     case LEFT:
         if (face[snake.y][snake.x - 1] != WALL)
         {
+            update_snake();
+            body[0].x = snake.x;
+            body[0].y = snake.y;
             snake.x--;
         }
         break;
     case RIGHT:
         if (face[snake.y][snake.x + 1] != WALL)
         {
+            update_snake();
+            body[0].x = snake.x;
+            body[0].y = snake.y;
             snake.x++;
         }
         break;
     }
-    update_snake();
 }
 
 void RandFOOD()
 {
-    int i, j;
+
+    int x, y;
+
     do
     {
         // 随机生成食物的横纵坐标
-        i = rand() % ROWS;
-        j = rand() % COLS;
-    } while (face[i][j] != KONG); // 确保生成食物的位置为空，若不为空则重新生成
-    face[i][j * 2] = FOOD;        // 将食物位置进行标记
-    int p[2] = {i, j};
-    return p;
+        x = rand() % ROWS;
+        y = rand() % COLS;
+    } while (face[x][y] != KONG); // 确保生成食物的位置为空，若不为空则重新生成
+    face[x][y] = FOOD;            // 将食物位置进行标记
+    food.x = x;
+    food.y = y;
+    food.exist = 1;
+}
+
+int Judge_Sfood()
+{
+    if (snake.x == food.x && snake.y == food.y)
+    {
+        face[food.x][food.y] = KONG;
+        food.exist = 0;
+        snake.len++;
+        update_snake();
+
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }

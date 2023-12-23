@@ -27,11 +27,11 @@ void color(int c)
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); // 颜色设置
     // 注：SetConsoleTextAttribute是一个API（应用程序编程接口）
 }
-int formatConsole()
+void formatConsole()
 {
     char chCmd[32];
     system("color 0a");
     system("title 贪吃蛇");
-    sprintf(chCmd, "mode con cols=%d lines=%d", COLS * 2, ROWS + 1);
+    sprintf(chCmd, "mode con cols=%d lines=%d", COLS * 2, ROWS + 2);
     system(chCmd);
 }
